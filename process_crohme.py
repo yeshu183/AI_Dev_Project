@@ -29,6 +29,7 @@ def main():
     if args.filter_basic:
         filtered_dir = os.path.join(args.output_dir, "filtered_basic_arithmetic")
         filter_stats = filter_basic_arithmetic(args.output_dir, filtered_dir)
+        print(filter_stats)
 
 if __name__ == "__main__":
     main()

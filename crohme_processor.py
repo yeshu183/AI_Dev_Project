@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 from xml.etree import ElementTree as ET
 import shutil
+import logging
 from tqdm import tqdm
 import pickle
 import re
@@ -339,10 +340,22 @@ def filter_basic_arithmetic(input_dir, output_dir):
         input_dir: Directory with processed data
         output_dir: Directory to save filtered data
     """
-    os.makedirs(output_dir, exist_ok=True)
     
-    # Define allowed characters for basic arithmetic
-    allowed_chars = set('0123456789+-*/() ')
+    # Set up logging
+    os.makedirs(output_dir, exist_ok=True)
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(os.path.join(output_dir, 'filter_log.txt')),
+            logging.StreamHandler()
+        ]
+    )
+    logger = logging.getLogger(__name__)
+    
+    # Define allowed characters and LaTeX commands for basic arithmetic
+    allowed_basic_chars = set("1234567890+-*/()=,.xyfabcdeghijklmnopqrstuvwz^_ ")  # Include common variables and superscripts
+    allowed_latex_commands = [r'\div', r'\times', r'\sqrt', r'\frac', r'\sum', r'\log', r'\sin', r'\cos', r'\tan', r'\pi']  # Include common functions
     
     # Create output directories
     for split in ['train', 'val', 'test']:
@@ -356,28 +369,70 @@ def filter_basic_arithmetic(input_dir, output_dir):
         label_dir = os.path.join(input_dir, split, 'labels')
         image_dir = os.path.join(input_dir, split, 'images')
         
+        if not os.path.exists(label_dir):
+            logger.warning(f"Labels directory not found: {label_dir}")
+            continue
+            
         label_files = glob.glob(os.path.join(label_dir, '*.txt'))
+        logger.info(f"Processing {split} split: found {len(label_files)} files")
         
         for label_path in label_files:
             stats['total'] += 1
             
             # Read label
-            with open(label_path, 'r') as f:
-                label = f.readline().strip()
+            try:
+                with open(label_path, 'r', encoding='utf-8') as f:
+                    label = f.readline().strip()
+                
+                # Check if it's basic arithmetic using improved character logic
+                is_basic_arithmetic = True
+                i = 0
+                while i < len(label):
+                    # Check for LaTeX commands
+                    if label[i] == '\\':
+                        found_command = False
+                        for cmd in allowed_latex_commands:
+                            if label[i:].startswith(cmd):
+                                i += len(cmd) - 1  # Skip to end of command minus 1 (loop will increment)
+                                found_command = True
+                                break
+                        
+                        if not found_command:
+                            is_basic_arithmetic = False
+                            break
+                    # Check for basic chars
+                    elif label[i] not in allowed_basic_chars:
+                        is_basic_arithmetic = False
+                        break
+                    
+                    i += 1
+                
+                if is_basic_arithmetic:
+                    stats['filtered'] += 1
+                    
+                    # Copy label and image
+                    basename = os.path.basename(label_path)
+                    image_name = os.path.splitext(basename)[0] + '.png'
+                    image_path = os.path.join(image_dir, image_name)
+                    
+                    if not os.path.exists(image_path):
+                        logger.warning(f"Image not found: {image_path}")
+                        continue
+                    
+                    dest_label = os.path.join(output_dir, split, 'labels', basename)
+                    dest_image = os.path.join(output_dir, split, 'images', image_name)
+                    
+                    shutil.copy(label_path, dest_label)
+                    shutil.copy(image_path, dest_image)
+                    
+                    logger.debug(f"Copied {basename} to filtered dataset")
             
-            # Check if it's basic arithmetic
-            if all(c in allowed_chars for c in label):
-                stats['filtered'] += 1
-                
-                # Copy label and image
-                basename = os.path.basename(label_path)
-                image_name = os.path.splitext(basename)[0] + '.png'
-                
-                shutil.copy(label_path, os.path.join(output_dir, split, 'labels', basename))
-                shutil.copy(os.path.join(image_dir, image_name), 
-                            os.path.join(output_dir, split, 'images', image_name))
+            except Exception as e:
+                logger.error(f"Error processing {label_path}: {str(e)}")
     
-    print(f"Filtered {stats['filtered']} basic arithmetic expressions out of {stats['total']} total")
+    logger.info(f"Filtered {stats['filtered']} basic arithmetic expressions out of {stats['total']} total")
+    logger.info(f"Percentage: {stats['filtered']/max(stats['total'], 1)*100:.2f}%")
+    
     return stats
 
 def main():
