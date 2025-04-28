@@ -20,11 +20,8 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import models, transforms
 from PIL import Image
 from util_classes import *
-from model_classes import *
-from test_utils import *
-import mlflow
-import mlflow.pytorch
-from mlflow.tracking import MlflowClient
+from util_model_classes import *
+from utils_test import *
 import io
 
 #image_path = "datasets/filtered_basic_arithmetic/test/images/expr_000877.png"
