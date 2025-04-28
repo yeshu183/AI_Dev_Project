@@ -1,0 +1,29 @@
+schema: '2.0'
+stages:
+  api_deployment:
+    cmd: cmd /c "start /b python prediction.py && python -m http.server 8080"
+    deps:
+    - path: best_model.pth
+      hash: md5
+      md5: ae97536ab26dca07140fef10405cfe28
+      size: 176275031
+    - path: index.html
+      hash: md5
+      md5: fa58dcd6eb8afc69776143726b074cb7
+      size: 5199
+    - path: prediction.py
+      hash: md5
+      md5: 571b7e53cf19509f56ee4d7b60fd571c
+      size: 4379
+    - path: util_classes.py
+      hash: md5
+      md5: 1ba1d1333650cc71d1fff794b8da5ee9
+      size: 7680
+    - path: util_model_classes.py
+      hash: md5
+      md5: a3fb6b179b3528f0bbb24d050b939ccd
+      size: 8905
+    - path: utils_test.py
+      hash: md5
+      md5: a44749a2c942fea93af1be2b94c56dc3
+      size: 7442
