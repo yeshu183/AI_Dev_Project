@@ -1,0 +1,6 @@
+outs:
+- md5: 32964cf5731bbb8982343d3ec821adef.dir
+  size: 2408229
+  nfiles: 3091
+  hash: md5
+  path: filtered_basic_arithmetic
