@@ -1,0 +1,4 @@
+[core]
+    remote = loc_remote
+['remote "loc_remote"']
+    url = ~/tmp/dvc_storage
