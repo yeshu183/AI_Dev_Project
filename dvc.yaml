@@ -14,7 +14,7 @@ stages:
     cmd: cmd /c "start /b python prediction.py && python -m http.server 8080"
     deps:
       - prediction.py
-      - best_model.pth
+      - models/best_model.pth
       - util_classes.py
       - util_model_classes.py
       - utils_test.py

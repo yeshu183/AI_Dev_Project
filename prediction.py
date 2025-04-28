@@ -39,7 +39,7 @@ class ImageData(BaseModel):
 async def load_model():
     global model, tokenizer, config
     # Load the full checkpoint
-    checkpoint = torch.load("best_model.pth", map_location='cpu', weights_only=False)
+    checkpoint = torch.load("models/best_model.pth", map_location='cpu', weights_only=False)
     print("Model loaded successfully")
 
     tokenizer = checkpoint['tokenizer']
