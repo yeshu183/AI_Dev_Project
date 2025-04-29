@@ -78,8 +78,15 @@ def train_epoch(model, dataloader, criterion, optimizer, config, epoch, tokenize
     return train_metrics
 
 
-def train_model(model, tokenizer, config):
-    """Main training function with metrics storage for plotting"""
+def train_model(model, tokenizer, config, use_validation=True):
+    """Main training function with metrics storage for plotting
+    
+    Args:
+        model: The model to train
+        tokenizer: Tokenizer for processing LaTeX
+        config: Configuration object
+        use_validation: Whether to use validation data (default: True)
+    """
     print(f"Using device: {config.device}")
     
     # Set up MLflow
@@ -99,28 +106,44 @@ def train_model(model, tokenizer, config):
         'train_exact_match': [],
         'train_token_accuracy': [],
         'train_bleu': [],
-        'val_loss': [],
-        'val_exact_match': [],
-        'val_token_accuracy': [],
-        'val_bleu': [],
         'epoch': []
     }
+    
+    # Add validation metrics if using validation
+    if use_validation:
+        metrics_history.update({
+            'val_loss': [],
+            'val_exact_match': [],
+            'val_token_accuracy': [],
+            'val_bleu': [],
+        })
     
     # Load dataset
     print("Loading dataset...")
     
-    # Create datasets
+    # Create train dataset
     train_dataset = CROHMEDataset(config.data_root, tokenizer, config, split='train')
-    val_dataset = CROHMEDataset(config.data_root, tokenizer, config, split='val')
-
     mlflow.log_param("train_dataset_size", len(train_dataset))
-    mlflow.log_param("val_dataset_size", len(val_dataset))
-    
     print(f"Train dataset size: {len(train_dataset)}")
-    print(f"Validation dataset size: {len(val_dataset)}")
-    # Limit dataset size
+    
+    # Create validation dataset if needed
+    if use_validation:
+        try:
+            val_dataset = CROHMEDataset(config.data_root, tokenizer, config, split='val')
+            mlflow.log_param("val_dataset_size", len(val_dataset))
+            print(f"Validation dataset size: {len(val_dataset)}")
+            has_validation = True
+        except (FileNotFoundError, OSError) as e:
+            print(f"Validation dataset not found: {e}")
+            print("Training without validation data.")
+            has_validation = False
+            use_validation = False
+    else:
+        has_validation = False
+    
+    # Limit dataset size if needed
     train_subset = Subset(train_dataset, list(range(min(50, len(train_dataset)))))
-    val_subset = Subset(val_dataset, list(range(min(50, len(val_dataset)))))
+    
     # Create data loaders
     train_loader = DataLoader(
         train_subset, 
@@ -130,54 +153,71 @@ def train_model(model, tokenizer, config):
         num_workers=0
     )
     
-    val_loader = DataLoader(
-        val_subset, 
-        batch_size=config.batch_size, 
-        shuffle=False, 
-        pin_memory=True,
-        num_workers=0
-    )
-    
-    # Create model
-    # print("Creating model...")
-    # model = HandwrittenMathRecognizer(config, tokenizer.vocab_size).to(config.device)
+    # Create validation loader if using validation
+    if has_validation:
+        val_subset = Subset(val_dataset, list(range(min(50, len(val_dataset)))))
+        val_loader = DataLoader(
+            val_subset, 
+            batch_size=config.batch_size, 
+            shuffle=False, 
+            pin_memory=True,
+            num_workers=0
+        )
     
     # Define loss function and optimizer
     criterion = nn.CrossEntropyLoss(ignore_index=tokenizer.token2idx[config.special_tokens['PAD']])
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
-    scheduler = ReduceLROnPlateau(
-        optimizer, mode='min', factor=0.5, patience=2, verbose=True
-    )
+    
+    if has_validation:
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+            optimizer, mode='min', factor=0.5, patience=2, verbose=True
+        )
+    else:
+        # Use a different scheduler when no validation is available
+        scheduler = torch.optim.lr_scheduler.StepLR(
+            optimizer, step_size=5, gamma=0.5
+        )
     
     # Training loop
     print(f"Starting training for {config.num_epochs} epochs...")
-    best_val_loss = float('inf')
+    best_loss = float('inf')
     
     for epoch in range(config.num_epochs):
         # Train
         train_metrics = train_epoch(model, train_loader, criterion, optimizer, config, epoch, tokenizer)
         
-        # Evaluate
-        val_metrics = evaluate(model, val_loader, criterion, tokenizer, config)
-        val_loss = val_metrics['loss']
-        
-        # Update learning rate
-        scheduler.step(val_loss)
-        
-        # Store metrics for plotting
+        # Store train metrics
         metrics_history['epoch'].append(epoch + 1)
         metrics_history['train_loss'].append(train_metrics['loss'])
         metrics_history['train_exact_match'].append(train_metrics['exact_match'])
         metrics_history['train_token_accuracy'].append(train_metrics['token_accuracy']) 
         metrics_history['train_bleu'].append(train_metrics['bleu'])
-        metrics_history['val_loss'].append(val_metrics['loss'])
-        metrics_history['val_exact_match'].append(val_metrics['exact_match'])
-        metrics_history['val_token_accuracy'].append(val_metrics['token_accuracy'])
-        metrics_history['val_bleu'].append(val_metrics['bleu'])
-
-        # Log metrics to MLflow
+        
+        # Log train metrics to MLflow
         log_metrics(train_metrics, step=epoch, prefix="train_")
-        log_metrics(val_metrics, step=epoch, prefix="val_")
+        
+        # Evaluate with validation data if available
+        if has_validation:
+            val_metrics = evaluate(model, val_loader, criterion, tokenizer, config)
+            val_loss = val_metrics['loss']
+            
+            # Update learning rate based on validation loss
+            scheduler.step(val_loss)
+            
+            # Store validation metrics
+            metrics_history['val_loss'].append(val_metrics['loss'])
+            metrics_history['val_exact_match'].append(val_metrics['exact_match'])
+            metrics_history['val_token_accuracy'].append(val_metrics['token_accuracy'])
+            metrics_history['val_bleu'].append(val_metrics['bleu'])
+            
+            # Log validation metrics to MLflow
+            log_metrics(val_metrics, step=epoch, prefix="val_")
+        else:
+            # Step scheduler based on epoch when no validation is available
+            scheduler.step()
+            val_metrics = None
+            val_loss = train_metrics['loss']  # Use train loss as proxy when no validation
+        
         # Log learning rate
         current_lr = optimizer.param_groups[0]['lr']
         mlflow.log_metric("learning_rate", current_lr, step=epoch)
@@ -188,17 +228,26 @@ def train_model(model, tokenizer, config):
         print(f"  Train Exact Match: {train_metrics['exact_match']:.4f}")
         print(f"  Train Token Accuracy: {train_metrics['token_accuracy']:.4f}")
         print(f"  Train BLEU Score: {train_metrics['bleu']:.4f}")
-        print(f"  Val Loss: {val_metrics['loss']:.4f}")
-        print(f"  Val Exact Match: {val_metrics['exact_match']:.4f}")
-        print(f"  Val Token Accuracy: {val_metrics['token_accuracy']:.4f}")
-        print(f"  Val BLEU Score: {val_metrics['bleu']:.4f}")
         
-        # Sample predictions
-        print("Sample predictions:")
-        for i in range(min(3, len(val_metrics['pred_examples']))):
-            print(f"  Pred: {val_metrics['pred_examples'][i]}")
-            print(f"  True: {val_metrics['target_examples'][i]}")
-            print()
+        if has_validation:
+            print(f"  Val Loss: {val_metrics['loss']:.4f}")
+            print(f"  Val Exact Match: {val_metrics['exact_match']:.4f}")
+            print(f"  Val Token Accuracy: {val_metrics['token_accuracy']:.4f}")
+            print(f"  Val BLEU Score: {val_metrics['bleu']:.4f}")
+            
+            # Sample predictions
+            print("Sample validation predictions:")
+            for i in range(min(3, len(val_metrics['pred_examples']))):
+                print(f"  Pred: {val_metrics['pred_examples'][i]}")
+                print(f"  True: {val_metrics['target_examples'][i]}")
+                print()
+        else:
+            # Show training predictions when no validation available
+            print("Sample training predictions:")
+            for i in range(min(3, len(train_metrics['pred_examples']))):
+                print(f"  Pred: {train_metrics['pred_examples'][i]}")
+                print(f"  True: {train_metrics['target_examples'][i]}")
+                print()
         
         # Save metrics history to JSON
         metrics_path = os.path.join(config.log_dir, 'metrics_history.json')
@@ -206,24 +255,30 @@ def train_model(model, tokenizer, config):
             json.dump(metrics_history, f, indent=4)
         
         # Save checkpoint if improved
-        if val_loss < best_val_loss:
-            best_val_loss = val_loss
+        if val_loss < best_loss:
+            best_loss = val_loss
             checkpoint_path = os.path.join(config.checkpoint_dir, 'best_model.pth')
             
-            torch.save({
+            # Prepare checkpoint data
+            checkpoint_data = {
                 'epoch': epoch + 1,
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
                 'scheduler_state_dict': scheduler.state_dict(),
-                'val_metrics': val_metrics,
                 'train_metrics': train_metrics,
                 'metrics_history': metrics_history,
                 'tokenizer': tokenizer,
                 'config': config
-            }, checkpoint_path)
+            }
+            
+            # Add validation metrics if available
+            if has_validation:
+                checkpoint_data['val_metrics'] = val_metrics
+            
+            torch.save(checkpoint_data, checkpoint_path)
             
             print(f"Saved best model checkpoint to {checkpoint_path}")
-            #Logging the model 
+            # Logging the model 
             mlflow.pytorch.log_model(model, "best_model")
             # Log the tokenizer and config as artifacts
             with tempfile.NamedTemporaryFile(suffix='.pkl', delete=False) as f:
@@ -233,21 +288,29 @@ def train_model(model, tokenizer, config):
             mlflow.log_artifact(temp_name, "tokenizer_config")
             os.unlink(temp_name)
 
-        # Make sure to save to Kaggle's output directory
-        os.makedirs(config.checkpoint_dir, exist_ok=True)  # This is a persistent location
+        # Make sure to save to the output directory
+        os.makedirs(config.checkpoint_dir, exist_ok=True)
         # Always save latest model
         checkpoint_path = os.path.join(config.checkpoint_dir, 'latest_model.pth')
-        torch.save({
+        
+        # Prepare checkpoint data for latest model
+        checkpoint_data = {
             'epoch': epoch + 1,
             'model_state_dict': model.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
             'scheduler_state_dict': scheduler.state_dict(),
-            'val_metrics': val_metrics,
             'train_metrics': train_metrics,
             'metrics_history': metrics_history,
             'tokenizer': tokenizer,
             'config': config
-        }, checkpoint_path)
+        }
+        
+        # Add validation metrics if available
+        if has_validation:
+            checkpoint_data['val_metrics'] = val_metrics
+            
+        torch.save(checkpoint_data, checkpoint_path)
+    
     print("Training complete!")
     
     # Plot and save metrics graphs

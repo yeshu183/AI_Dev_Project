@@ -46,6 +46,7 @@ if __name__=="__main__":
     config.checkpoint_dir = "models"
     config.log_dir = "models/logs"
     config.data_root = "filtered_basic_arithmetic"
+    use_val = True #SHould change this to ckeck if the folder has val folder
     if checkpoint_path:
             # Continue training from checkpoint
             print(f"Loading checkpoint from {checkpoint_path}...")
@@ -56,7 +57,7 @@ if __name__=="__main__":
                 if key not in ['batch_size', 'num_epochs', 'learning_rate']:
                     setattr(config, key, value)
             
-            model, tokenizer, metrics_history = train_model(model,tokenizer,config)
+            model, tokenizer, metrics_history = train_model(model,tokenizer,config,use_validation=use_val)
     else:
         # Train from scratch
-        model, tokenizer,metrics_history = train_model(model,tokenizer,config)
+        model, tokenizer,metrics_history = train_model(model,tokenizer,config,use_validation=use_val)
