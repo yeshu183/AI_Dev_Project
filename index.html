@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Expression Recognition</title>
+    <title>Math Expression</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,11 +45,14 @@
             display: none;
             text-align: center;
         }
+        .feedback-section {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Math Expression Recognition</h1>
+        <h1>Math Expression</h1>
         
         <div class="upload-section">
             <div class="upload-area" id="upload-area">
@@ -69,6 +72,12 @@
             <h3>LaTeX Output:</h3>
             <div id="latex-output">No prediction yet</div>
         </div>
+        
+        <div class="feedback-section" id="feedback-section" style="display: none;">
+            <h3>Provide Correct LaTeX:</h3>
+            <textarea id="feedback-latex" rows="4" cols="50" placeholder="Enter the correct LaTeX expression"></textarea>
+            <button id="submit-feedback">Submit Feedback</button>
+        </div>
     </div>
 
     <script>
@@ -78,6 +87,11 @@
         const predictBtn = document.getElementById('predict-btn');
         const loading = document.getElementById('loading');
         const latexOutput = document.getElementById('latex-output');
+        const feedbackSection = document.getElementById('feedback-section');
+        const feedbackLatexInput = document.getElementById('feedback-latex');
+        const submitFeedbackBtn = document.getElementById('submit-feedback');
+
+        let uploadedFile = null;
         
         // Handle file upload via click
         uploadArea.addEventListener('click', () => {
@@ -110,11 +124,13 @@
         function handleFileSelect() {
             const file = fileInput.files[0];
             if (file && file.type.startsWith('image/')) {
+                uploadedFile = file;
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     preview.src = e.target.result;
                     preview.style.display = 'block';
                     predictBtn.disabled = false;
+                    feedbackSection.style.display = 'none';  // Hide feedback section initially
                 };
                 reader.readAsDataURL(file);
             }
@@ -122,8 +138,7 @@
         
         // Handle prediction
         predictBtn.addEventListener('click', async () => {
-            const file = fileInput.files[0];
-            if (!file) return;
+            if (!uploadedFile) return;
             
             // Show loading state
             loading.style.display = 'block';
@@ -132,7 +147,7 @@
             
             // Create form data
             const formData = new FormData();
-            formData.append('file', file);
+            formData.append('file', uploadedFile);
             
             try {
                 // Make API call
@@ -147,11 +162,50 @@
                 
                 const data = await response.json();
                 latexOutput.textContent = data.latex;
+                
+                // Show feedback section
+                feedbackSection.style.display = 'block';
+                
             } catch (error) {
                 latexOutput.textContent = `Error: ${error.message}`;
             } finally {
                 loading.style.display = 'none';
                 predictBtn.disabled = false;
+            }
+        });
+        
+        // Submit feedback
+        submitFeedbackBtn.addEventListener('click', async () => {
+            const correctLatex = feedbackLatexInput.value.trim();
+            
+            if (!correctLatex) {
+                alert('Please enter the correct LaTeX expression.');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('correct_latex', correctLatex);
+            
+            try {
+                // Make API call to submit feedback
+                const response = await fetch('http://localhost:8000/feedback', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Feedback submission failed');
+                }
+                
+                const data = await response.json();
+                alert('Feedback submitted successfully!');
+                
+                // Reset the feedback section
+                feedbackLatexInput.value = '';
+                feedbackSection.style.display = 'none';
+                
+            } catch (error) {
+                alert(`Error: ${error.message}`);
             }
         });
     </script>

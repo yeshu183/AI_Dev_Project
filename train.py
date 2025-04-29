@@ -45,8 +45,8 @@ if __name__=="__main__":
     checkpoint_path = None
     config.checkpoint_dir = "models"
     config.log_dir = "models/logs"
-    config.data_root = "filtered_basic_arithmetic"
-    use_val = True #SHould change this to ckeck if the folder has val folder
+    config.data_root = "retraining data"
+    use_val = False #SHould change this to ckeck if the folder has val folder
     if checkpoint_path:
             # Continue training from checkpoint
             print(f"Loading checkpoint from {checkpoint_path}...")

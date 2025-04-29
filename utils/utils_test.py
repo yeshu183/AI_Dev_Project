@@ -187,8 +187,10 @@ def test_model(model, tokenizer, config, test_loader=None):
     
     return metrics
 
-def predict_image(model, tokenizer, image_path, config):
+def predict_image(model, tokenizer, image, config):
     """Predict LaTeX for a single image"""
+    if image.mode != 'L':
+        image = image.convert('L')
     # Load and preprocess image
     transform = transforms.Compose([
         transforms.Resize((config.img_height, config.img_width)),
@@ -196,7 +198,6 @@ def predict_image(model, tokenizer, image_path, config):
         transforms.Normalize(mean=[0.5], std=[0.5])
     ])
     
-    image = Image.open(image_path).convert('L')
     image = transform(image).unsqueeze(0).to(config.device)
     
     # Generate prediction

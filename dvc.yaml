@@ -11,13 +11,13 @@ stages:
   #         cache: false
 
   api_deployment:
-    cmd: cmd /c "start /b python prediction.py && python -m http.server 8080"
+    cmd: cmd /c "start /b python prediction.py && python -m http.server 8091"
     deps:
       - prediction.py
       - models/best_model.pth
-      - util_classes.py
-      - util_model_classes.py
-      - utils_test.py
+      - utils/util_classes.py
+      - utils/util_model_classes.py
+      - utils/utils_test.py
       - index.html
     outs:
       - deployment_success.txt

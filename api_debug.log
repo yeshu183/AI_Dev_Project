@@ -1,0 +1,398 @@
+2025-04-29 20:32:51,566 - matplotlib - DEBUG - matplotlib data path: C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\matplotlib\mpl-data
+2025-04-29 20:32:51,693 - matplotlib - DEBUG - CONFIGDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:32:51,698 - matplotlib - DEBUG - interactive is False
+2025-04-29 20:32:51,699 - matplotlib - DEBUG - platform is win32
+2025-04-29 20:32:51,861 - matplotlib - DEBUG - CACHEDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:32:51,866 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\Yeshwanth Kesav\.matplotlib\fontlist-v330.json
+2025-04-29 20:33:03,777 - numexpr.utils - INFO - Note: NumExpr detected 12 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-04-29 20:33:03,778 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2025-04-29 20:33:09,018 - __main__ - INFO - Utility modules imported successfully
+2025-04-29 20:33:09,036 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-29 20:33:09,138 - __main__ - INFO - Attempting to load model...
+2025-04-29 20:33:09,389 - __main__ - INFO - Checkpoint loaded successfully
+2025-04-29 20:33:09,390 - __main__ - INFO - Config loaded: {'data_root': 'filtered_basic_arithmetic', 'embed_dim': 256, 'hidden_dim': 512, 'num_layers': 1, 'dropout': 0.3, 'max_seq_len': 150, 'batch_size': 128, 'num_epochs': 2, 'learning_rate': 0.001, 'teacher_forcing_ratio': 0.9, 'teacher_forcing_decay': 0.9, 'grad_clip': 5.0, 'special_tokens': {'PAD': '<PAD>', 'START': '<START>', 'END': '<END>', 'UNK': '<UNK>'}, 'img_height': 128, 'img_width': 512, 'checkpoint_dir': 'models', 'log_dir': 'models/logs', 'device': 'cpu'}
+2025-04-29 20:33:09,390 - __main__ - INFO - Initializing model...
+2025-04-29 20:33:09,958 - __main__ - INFO - Model and tokenizer loaded successfully
+2025-04-29 20:33:18,666 - python_multipart.multipart - DEBUG - Calling on_part_begin with no data
+2025-04-29 20:33:18,667 - python_multipart.multipart - DEBUG - Calling on_header_field with data[42:61]
+2025-04-29 20:33:18,668 - python_multipart.multipart - DEBUG - Calling on_header_value with data[63:113]
+2025-04-29 20:33:18,668 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:33:18,669 - python_multipart.multipart - DEBUG - Calling on_header_field with data[115:127]
+2025-04-29 20:33:18,670 - python_multipart.multipart - DEBUG - Calling on_header_value with data[129:138]
+2025-04-29 20:33:18,670 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:33:18,671 - python_multipart.multipart - DEBUG - Calling on_headers_finished with no data
+2025-04-29 20:33:18,672 - python_multipart.multipart - DEBUG - Calling on_part_data with data[142:1523]
+2025-04-29 20:33:18,673 - python_multipart.multipart - DEBUG - Calling on_part_end with no data
+2025-04-29 20:33:18,673 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-04-29 20:33:18,675 - __main__ - INFO - Received prediction request for file: expr_000914.png
+2025-04-29 20:33:18,675 - __main__ - INFO - Reading file contents
+2025-04-29 20:33:18,679 - __main__ - INFO - Raw file saved to debug_raw_b9ec4840-a58a-469c-963f-e02fc8de9f84.png
+2025-04-29 20:33:18,680 - __main__ - INFO - Converting to PIL Image
+2025-04-29 20:33:18,703 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2025-04-29 20:33:18,704 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 41 1324
+2025-04-29 20:33:18,706 - __main__ - INFO - Image loaded successfully: size=(256, 256), mode=L
+2025-04-29 20:33:18,715 - __main__ - INFO - Processed image saved to debug_processed_44cec489-6508-4ef2-a692-afac5ccfb6b5.png
+2025-04-29 20:33:18,716 - __main__ - INFO - Calling predict_image function
+2025-04-29 20:33:18,718 - __main__ - ERROR - Prediction function error: 'Image' object has no attribute 'read'
+2025-04-29 20:33:18,727 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\prediction.py", line 227, in predict
+    latex = predict_image(model, tokenizer, image, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\utils\utils_test.py", line 199, in predict_image
+    image = Image.open(image_path).convert('L')
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\PIL\Image.py", line 3286, in open
+    prefix = fp.read(16)
+             ^^^^^^^
+AttributeError: 'Image' object has no attribute 'read'
+
+2025-04-29 20:33:23,759 - python_multipart.multipart - DEBUG - Calling on_part_begin with no data
+2025-04-29 20:33:23,760 - python_multipart.multipart - DEBUG - Calling on_header_field with data[42:61]
+2025-04-29 20:33:23,760 - python_multipart.multipart - DEBUG - Calling on_header_value with data[63:113]
+2025-04-29 20:33:23,761 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:33:23,761 - python_multipart.multipart - DEBUG - Calling on_header_field with data[115:127]
+2025-04-29 20:33:23,761 - python_multipart.multipart - DEBUG - Calling on_header_value with data[129:138]
+2025-04-29 20:33:23,762 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:33:23,762 - python_multipart.multipart - DEBUG - Calling on_headers_finished with no data
+2025-04-29 20:33:23,763 - python_multipart.multipart - DEBUG - Calling on_part_data with data[142:1539]
+2025-04-29 20:33:23,764 - python_multipart.multipart - DEBUG - Calling on_part_end with no data
+2025-04-29 20:33:23,765 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-04-29 20:33:23,771 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2025-04-29 20:33:23,775 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 41 1340
+2025-04-29 20:42:28,051 - matplotlib - DEBUG - matplotlib data path: C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\matplotlib\mpl-data
+2025-04-29 20:42:28,299 - matplotlib - DEBUG - CONFIGDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:42:28,305 - matplotlib - DEBUG - interactive is False
+2025-04-29 20:42:28,305 - matplotlib - DEBUG - platform is win32
+2025-04-29 20:42:28,446 - matplotlib - DEBUG - CACHEDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:42:28,451 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\Yeshwanth Kesav\.matplotlib\fontlist-v330.json
+2025-04-29 20:42:39,575 - python_multipart.multipart - DEBUG - Calling on_part_begin with no data
+2025-04-29 20:42:39,576 - python_multipart.multipart - DEBUG - Calling on_header_field with data[42:61]
+2025-04-29 20:42:39,577 - python_multipart.multipart - DEBUG - Calling on_header_value with data[63:113]
+2025-04-29 20:42:39,578 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:42:39,579 - python_multipart.multipart - DEBUG - Calling on_header_field with data[115:127]
+2025-04-29 20:42:39,579 - python_multipart.multipart - DEBUG - Calling on_header_value with data[129:138]
+2025-04-29 20:42:39,584 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:42:39,590 - python_multipart.multipart - DEBUG - Calling on_headers_finished with no data
+2025-04-29 20:42:39,594 - python_multipart.multipart - DEBUG - Calling on_part_data with data[142:1531]
+2025-04-29 20:42:39,600 - python_multipart.multipart - DEBUG - Calling on_part_end with no data
+2025-04-29 20:42:39,608 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-04-29 20:42:39,620 - __main__ - INFO - Received prediction request for file: expr_000855.png
+2025-04-29 20:42:39,624 - __main__ - INFO - Reading file contents
+2025-04-29 20:42:39,629 - __main__ - INFO - Raw file saved to debug_raw_8a9bd558-c690-455c-9eed-b9e5db702b5f.png
+2025-04-29 20:42:39,630 - __main__ - INFO - Converting to PIL Image
+2025-04-29 20:42:39,636 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2025-04-29 20:42:39,642 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 41 1332
+2025-04-29 20:42:39,645 - __main__ - INFO - Image loaded successfully: size=(256, 256), mode=L
+2025-04-29 20:42:39,673 - __main__ - INFO - Processed image saved to debug_processed_b9c346b2-2650-4d2e-bdb7-f2f41b904d37.png
+2025-04-29 20:42:39,675 - __main__ - INFO - Calling predict_image function
+2025-04-29 20:42:39,676 - __main__ - ERROR - Prediction function error: 'Image' object has no attribute 'read'
+2025-04-29 20:42:39,686 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\prediction.py", line 227, in predict
+    latex = predict_image(model, tokenizer, image, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\utils\utils_test.py", line 199, in predict_image
+    #image = Image.open(image_path).convert('L')
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\PIL\Image.py", line 3286, in open
+    prefix = fp.read(16)
+             ^^^^^^^
+AttributeError: 'Image' object has no attribute 'read'
+
+2025-04-29 20:42:44,490 - python_multipart.multipart - DEBUG - Calling on_part_begin with no data
+2025-04-29 20:42:44,491 - python_multipart.multipart - DEBUG - Calling on_header_field with data[42:61]
+2025-04-29 20:42:44,492 - python_multipart.multipart - DEBUG - Calling on_header_value with data[63:113]
+2025-04-29 20:42:44,492 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:42:44,493 - python_multipart.multipart - DEBUG - Calling on_header_field with data[115:127]
+2025-04-29 20:42:44,493 - python_multipart.multipart - DEBUG - Calling on_header_value with data[129:138]
+2025-04-29 20:42:44,494 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:42:44,494 - python_multipart.multipart - DEBUG - Calling on_headers_finished with no data
+2025-04-29 20:42:44,495 - python_multipart.multipart - DEBUG - Calling on_part_data with data[142:1531]
+2025-04-29 20:42:44,496 - python_multipart.multipart - DEBUG - Calling on_part_end with no data
+2025-04-29 20:42:44,496 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-04-29 20:42:44,510 - __main__ - INFO - Received prediction request for file: expr_000855.png
+2025-04-29 20:42:44,511 - __main__ - INFO - Reading file contents
+2025-04-29 20:42:44,525 - __main__ - INFO - Raw file saved to debug_raw_abc56f11-88e2-4d2c-8768-b4dd33b4778b.png
+2025-04-29 20:42:44,528 - __main__ - INFO - Converting to PIL Image
+2025-04-29 20:42:44,546 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2025-04-29 20:42:44,630 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 41 1332
+2025-04-29 20:42:44,637 - __main__ - INFO - Image loaded successfully: size=(256, 256), mode=L
+2025-04-29 20:42:44,744 - __main__ - INFO - Processed image saved to debug_processed_41bd6138-703f-44f8-84cf-c47f9a6bf68c.png
+2025-04-29 20:42:44,754 - __main__ - INFO - Calling predict_image function
+2025-04-29 20:42:44,756 - __main__ - ERROR - Prediction function error: 'Image' object has no attribute 'read'
+2025-04-29 20:42:44,760 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\prediction.py", line 227, in predict
+    latex = predict_image(model, tokenizer, image, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\utils\utils_test.py", line 199, in predict_image
+    #image = Image.open(image_path).convert('L')
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\PIL\Image.py", line 3286, in open
+    prefix = fp.read(16)
+             ^^^^^^^
+AttributeError: 'Image' object has no attribute 'read'
+
+2025-04-29 20:42:48,109 - numexpr.utils - INFO - Note: NumExpr detected 12 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-04-29 20:42:48,112 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2025-04-29 20:42:55,097 - __main__ - INFO - Utility modules imported successfully
+2025-04-29 20:42:55,115 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-29 20:42:55,277 - __main__ - INFO - Attempting to load model...
+2025-04-29 20:42:55,526 - __main__ - INFO - Checkpoint loaded successfully
+2025-04-29 20:42:55,527 - __main__ - INFO - Config loaded: {'data_root': 'filtered_basic_arithmetic', 'embed_dim': 256, 'hidden_dim': 512, 'num_layers': 1, 'dropout': 0.3, 'max_seq_len': 150, 'batch_size': 128, 'num_epochs': 2, 'learning_rate': 0.001, 'teacher_forcing_ratio': 0.9, 'teacher_forcing_decay': 0.9, 'grad_clip': 5.0, 'special_tokens': {'PAD': '<PAD>', 'START': '<START>', 'END': '<END>', 'UNK': '<UNK>'}, 'img_height': 128, 'img_width': 512, 'checkpoint_dir': 'models', 'log_dir': 'models/logs', 'device': 'cpu'}
+2025-04-29 20:42:55,527 - __main__ - INFO - Initializing model...
+2025-04-29 20:42:55,944 - __main__ - INFO - Model and tokenizer loaded successfully
+2025-04-29 20:44:28,667 - matplotlib - DEBUG - matplotlib data path: C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\matplotlib\mpl-data
+2025-04-29 20:44:28,780 - matplotlib - DEBUG - CONFIGDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:44:28,784 - matplotlib - DEBUG - interactive is False
+2025-04-29 20:44:28,785 - matplotlib - DEBUG - platform is win32
+2025-04-29 20:44:28,881 - matplotlib - DEBUG - CACHEDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:44:28,887 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\Yeshwanth Kesav\.matplotlib\fontlist-v330.json
+2025-04-29 20:44:42,781 - python_multipart.multipart - DEBUG - Calling on_part_begin with no data
+2025-04-29 20:44:42,783 - python_multipart.multipart - DEBUG - Calling on_header_field with data[42:61]
+2025-04-29 20:44:42,783 - python_multipart.multipart - DEBUG - Calling on_header_value with data[63:113]
+2025-04-29 20:44:42,784 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:44:42,786 - python_multipart.multipart - DEBUG - Calling on_header_field with data[115:127]
+2025-04-29 20:44:42,787 - python_multipart.multipart - DEBUG - Calling on_header_value with data[129:138]
+2025-04-29 20:44:42,789 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:44:42,792 - python_multipart.multipart - DEBUG - Calling on_headers_finished with no data
+2025-04-29 20:44:42,799 - python_multipart.multipart - DEBUG - Calling on_part_data with data[142:1438]
+2025-04-29 20:44:42,804 - python_multipart.multipart - DEBUG - Calling on_part_end with no data
+2025-04-29 20:44:42,807 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-04-29 20:44:42,819 - __main__ - INFO - Received prediction request for file: expr_000913.png
+2025-04-29 20:44:42,824 - __main__ - INFO - Reading file contents
+2025-04-29 20:44:42,871 - __main__ - INFO - Raw file saved to debug_raw_65847c32-7fae-4fc0-9625-20d985ecd1c9.png
+2025-04-29 20:44:42,874 - __main__ - INFO - Converting to PIL Image
+2025-04-29 20:44:42,887 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2025-04-29 20:44:42,889 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 41 1239
+2025-04-29 20:44:42,891 - __main__ - INFO - Image loaded successfully: size=(256, 256), mode=L
+2025-04-29 20:44:42,921 - __main__ - INFO - Processed image saved to debug_processed_0ae1a1c6-6ca4-427a-9887-1663261a360d.png
+2025-04-29 20:44:42,925 - __main__ - INFO - Calling predict_image function
+2025-04-29 20:44:42,935 - __main__ - ERROR - Prediction function error: 'Image' object has no attribute 'read'
+2025-04-29 20:44:42,938 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\prediction.py", line 227, in predict
+    latex = predict_image(model, tokenizer, image, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\utils\utils_test.py", line 199, in predict_image
+    #image = Image.open(image_path).convert('L')
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\PIL\Image.py", line 3286, in open
+    prefix = fp.read(16)
+             ^^^^^^^
+AttributeError: 'Image' object has no attribute 'read'
+
+2025-04-29 20:44:44,058 - numexpr.utils - INFO - Note: NumExpr detected 12 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-04-29 20:44:44,068 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2025-04-29 20:44:52,786 - __main__ - INFO - Utility modules imported successfully
+2025-04-29 20:44:52,815 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-29 20:44:53,124 - __main__ - INFO - Attempting to load model...
+2025-04-29 20:44:53,473 - __main__ - INFO - Checkpoint loaded successfully
+2025-04-29 20:44:53,474 - __main__ - INFO - Config loaded: {'data_root': 'filtered_basic_arithmetic', 'embed_dim': 256, 'hidden_dim': 512, 'num_layers': 1, 'dropout': 0.3, 'max_seq_len': 150, 'batch_size': 128, 'num_epochs': 2, 'learning_rate': 0.001, 'teacher_forcing_ratio': 0.9, 'teacher_forcing_decay': 0.9, 'grad_clip': 5.0, 'special_tokens': {'PAD': '<PAD>', 'START': '<START>', 'END': '<END>', 'UNK': '<UNK>'}, 'img_height': 128, 'img_width': 512, 'checkpoint_dir': 'models', 'log_dir': 'models/logs', 'device': 'cpu'}
+2025-04-29 20:44:53,478 - __main__ - INFO - Initializing model...
+2025-04-29 20:44:55,372 - __main__ - INFO - Model and tokenizer loaded successfully
+2025-04-29 20:46:13,886 - matplotlib - DEBUG - matplotlib data path: C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\matplotlib\mpl-data
+2025-04-29 20:46:14,049 - matplotlib - DEBUG - CONFIGDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:46:14,054 - matplotlib - DEBUG - interactive is False
+2025-04-29 20:46:14,056 - matplotlib - DEBUG - platform is win32
+2025-04-29 20:46:14,290 - matplotlib - DEBUG - CACHEDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:46:14,301 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\Yeshwanth Kesav\.matplotlib\fontlist-v330.json
+2025-04-29 20:46:20,181 - python_multipart.multipart - DEBUG - Calling on_part_begin with no data
+2025-04-29 20:46:20,182 - python_multipart.multipart - DEBUG - Calling on_header_field with data[42:61]
+2025-04-29 20:46:20,183 - python_multipart.multipart - DEBUG - Calling on_header_value with data[63:113]
+2025-04-29 20:46:20,184 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:46:20,185 - python_multipart.multipart - DEBUG - Calling on_header_field with data[115:127]
+2025-04-29 20:46:20,186 - python_multipart.multipart - DEBUG - Calling on_header_value with data[129:138]
+2025-04-29 20:46:20,187 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:46:20,187 - python_multipart.multipart - DEBUG - Calling on_headers_finished with no data
+2025-04-29 20:46:20,191 - python_multipart.multipart - DEBUG - Calling on_part_data with data[142:1523]
+2025-04-29 20:46:20,194 - python_multipart.multipart - DEBUG - Calling on_part_end with no data
+2025-04-29 20:46:20,200 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-04-29 20:46:20,201 - __main__ - INFO - Received prediction request for file: expr_000914.png
+2025-04-29 20:46:20,202 - __main__ - INFO - Reading file contents
+2025-04-29 20:46:20,208 - __main__ - INFO - Raw file saved to debug_raw_45248605-9702-4ce9-9cae-f021575c8f52.png
+2025-04-29 20:46:20,211 - __main__ - INFO - Converting to PIL Image
+2025-04-29 20:46:20,213 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2025-04-29 20:46:20,213 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 41 1324
+2025-04-29 20:46:20,220 - __main__ - INFO - Image loaded successfully: size=(256, 256), mode=L
+2025-04-29 20:46:20,269 - __main__ - INFO - Processed image saved to debug_processed_e4d7471e-9b51-4a7a-b829-075787c37296.png
+2025-04-29 20:46:20,526 - __main__ - INFO - Calling predict_image function
+2025-04-29 20:46:20,528 - __main__ - ERROR - Prediction function error: 'Image' object has no attribute 'read'
+2025-04-29 20:46:20,551 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\prediction.py", line 227, in predict
+    latex = predict_image(model, tokenizer, image, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\utils\utils_test.py", line 199, in predict_image
+    image = transform(image).unsqueeze(0).to(config.device)
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\PIL\Image.py", line 3286, in open
+    prefix = fp.read(16)
+             ^^^^^^^
+AttributeError: 'Image' object has no attribute 'read'
+
+2025-04-29 20:46:32,668 - numexpr.utils - INFO - Note: NumExpr detected 12 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-04-29 20:46:32,669 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2025-04-29 20:46:37,106 - __main__ - INFO - Utility modules imported successfully
+2025-04-29 20:46:37,118 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-29 20:46:37,215 - __main__ - INFO - Attempting to load model...
+2025-04-29 20:46:37,393 - __main__ - INFO - Checkpoint loaded successfully
+2025-04-29 20:46:37,394 - __main__ - INFO - Config loaded: {'data_root': 'filtered_basic_arithmetic', 'embed_dim': 256, 'hidden_dim': 512, 'num_layers': 1, 'dropout': 0.3, 'max_seq_len': 150, 'batch_size': 128, 'num_epochs': 2, 'learning_rate': 0.001, 'teacher_forcing_ratio': 0.9, 'teacher_forcing_decay': 0.9, 'grad_clip': 5.0, 'special_tokens': {'PAD': '<PAD>', 'START': '<START>', 'END': '<END>', 'UNK': '<UNK>'}, 'img_height': 128, 'img_width': 512, 'checkpoint_dir': 'models', 'log_dir': 'models/logs', 'device': 'cpu'}
+2025-04-29 20:46:37,394 - __main__ - INFO - Initializing model...
+2025-04-29 20:46:37,691 - __main__ - INFO - Model and tokenizer loaded successfully
+2025-04-29 20:46:59,367 - python_multipart.multipart - DEBUG - Calling on_part_begin with no data
+2025-04-29 20:46:59,369 - python_multipart.multipart - DEBUG - Calling on_header_field with data[42:61]
+2025-04-29 20:46:59,369 - python_multipart.multipart - DEBUG - Calling on_header_value with data[63:113]
+2025-04-29 20:46:59,370 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:46:59,370 - python_multipart.multipart - DEBUG - Calling on_header_field with data[115:127]
+2025-04-29 20:46:59,371 - python_multipart.multipart - DEBUG - Calling on_header_value with data[129:138]
+2025-04-29 20:46:59,371 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:46:59,376 - python_multipart.multipart - DEBUG - Calling on_headers_finished with no data
+2025-04-29 20:46:59,378 - python_multipart.multipart - DEBUG - Calling on_part_data with data[142:1523]
+2025-04-29 20:46:59,379 - python_multipart.multipart - DEBUG - Calling on_part_end with no data
+2025-04-29 20:46:59,380 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-04-29 20:46:59,380 - __main__ - INFO - Received prediction request for file: expr_000914.png
+2025-04-29 20:46:59,381 - __main__ - INFO - Reading file contents
+2025-04-29 20:46:59,384 - __main__ - INFO - Raw file saved to debug_raw_06ffb1fa-1f07-44c0-8953-17ea23fd54cc.png
+2025-04-29 20:46:59,386 - __main__ - INFO - Converting to PIL Image
+2025-04-29 20:46:59,386 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2025-04-29 20:46:59,387 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 41 1324
+2025-04-29 20:46:59,393 - __main__ - INFO - Image loaded successfully: size=(256, 256), mode=L
+2025-04-29 20:46:59,402 - __main__ - INFO - Processed image saved to debug_processed_d683e99c-8a03-4311-8ed2-77f6984c4626.png
+2025-04-29 20:46:59,404 - __main__ - INFO - Calling predict_image function
+2025-04-29 20:46:59,531 - __main__ - ERROR - Prediction function error: 'Image' object has no attribute 'read'
+2025-04-29 20:46:59,536 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\prediction.py", line 227, in predict
+    latex = predict_image(model, tokenizer, image, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\utils\utils_test.py", line 199, in predict_image
+    image = transform(image).unsqueeze(0).to(config.device)
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\PIL\Image.py", line 3286, in open
+    prefix = fp.read(16)
+             ^^^^^^^
+AttributeError: 'Image' object has no attribute 'read'
+
+2025-04-29 20:49:08,032 - matplotlib - DEBUG - matplotlib data path: C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\matplotlib\mpl-data
+2025-04-29 20:49:08,174 - matplotlib - DEBUG - CONFIGDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:49:08,180 - matplotlib - DEBUG - interactive is False
+2025-04-29 20:49:08,181 - matplotlib - DEBUG - platform is win32
+2025-04-29 20:49:08,360 - matplotlib - DEBUG - CACHEDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:49:08,371 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\Yeshwanth Kesav\.matplotlib\fontlist-v330.json
+2025-04-29 20:49:15,869 - python_multipart.multipart - DEBUG - Calling on_part_begin with no data
+2025-04-29 20:49:15,870 - python_multipart.multipart - DEBUG - Calling on_header_field with data[42:61]
+2025-04-29 20:49:15,871 - python_multipart.multipart - DEBUG - Calling on_header_value with data[63:113]
+2025-04-29 20:49:15,872 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:49:15,872 - python_multipart.multipart - DEBUG - Calling on_header_field with data[115:127]
+2025-04-29 20:49:15,873 - python_multipart.multipart - DEBUG - Calling on_header_value with data[129:138]
+2025-04-29 20:49:15,874 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:49:15,876 - python_multipart.multipart - DEBUG - Calling on_headers_finished with no data
+2025-04-29 20:49:15,881 - python_multipart.multipart - DEBUG - Calling on_part_data with data[142:1539]
+2025-04-29 20:49:15,883 - python_multipart.multipart - DEBUG - Calling on_part_end with no data
+2025-04-29 20:49:15,885 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-04-29 20:49:15,888 - __main__ - INFO - Received prediction request for file: expr_000852.png
+2025-04-29 20:49:15,888 - __main__ - INFO - Reading file contents
+2025-04-29 20:49:15,893 - __main__ - INFO - Raw file saved to debug_raw_3300dcfc-7fa1-4f6a-a1d3-07969a47de03.png
+2025-04-29 20:49:15,903 - __main__ - INFO - Converting to PIL Image
+2025-04-29 20:49:15,907 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2025-04-29 20:49:15,910 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 41 1340
+2025-04-29 20:49:15,917 - __main__ - INFO - Image loaded successfully: size=(256, 256), mode=L
+2025-04-29 20:49:15,931 - __main__ - INFO - Processed image saved to debug_processed_c6f92656-bfa1-48ee-a3a3-82ed93fc1056.png
+2025-04-29 20:49:15,935 - __main__ - INFO - Calling predict_image function
+2025-04-29 20:49:15,938 - __main__ - ERROR - Prediction function error: 'Image' object has no attribute 'read'
+2025-04-29 20:49:15,942 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\prediction.py", line 227, in predict
+    latex = predict_image(model, tokenizer, image, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\utils\utils_test.py", line 199, in predict_image
+    ])
+       
+  File "C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\PIL\Image.py", line 3286, in open
+    prefix = fp.read(16)
+             ^^^^^^^
+AttributeError: 'Image' object has no attribute 'read'
+
+2025-04-29 20:49:27,702 - numexpr.utils - INFO - Note: NumExpr detected 12 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-04-29 20:49:27,703 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2025-04-29 20:49:31,847 - __main__ - INFO - Utility modules imported successfully
+2025-04-29 20:49:31,862 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-29 20:49:31,968 - __main__ - INFO - Attempting to load model...
+2025-04-29 20:49:32,160 - __main__ - INFO - Checkpoint loaded successfully
+2025-04-29 20:49:32,160 - __main__ - INFO - Config loaded: {'data_root': 'filtered_basic_arithmetic', 'embed_dim': 256, 'hidden_dim': 512, 'num_layers': 1, 'dropout': 0.3, 'max_seq_len': 150, 'batch_size': 128, 'num_epochs': 2, 'learning_rate': 0.001, 'teacher_forcing_ratio': 0.9, 'teacher_forcing_decay': 0.9, 'grad_clip': 5.0, 'special_tokens': {'PAD': '<PAD>', 'START': '<START>', 'END': '<END>', 'UNK': '<UNK>'}, 'img_height': 128, 'img_width': 512, 'checkpoint_dir': 'models', 'log_dir': 'models/logs', 'device': 'cpu'}
+2025-04-29 20:49:32,161 - __main__ - INFO - Initializing model...
+2025-04-29 20:49:32,459 - __main__ - INFO - Model and tokenizer loaded successfully
+2025-04-29 20:50:09,291 - matplotlib - DEBUG - matplotlib data path: C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\matplotlib\mpl-data
+2025-04-29 20:50:09,394 - matplotlib - DEBUG - CONFIGDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:50:09,400 - matplotlib - DEBUG - interactive is False
+2025-04-29 20:50:09,401 - matplotlib - DEBUG - platform is win32
+2025-04-29 20:50:09,505 - matplotlib - DEBUG - CACHEDIR=C:\Users\Yeshwanth Kesav\.matplotlib
+2025-04-29 20:50:09,510 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\Yeshwanth Kesav\.matplotlib\fontlist-v330.json
+2025-04-29 20:50:18,898 - numexpr.utils - INFO - Note: NumExpr detected 12 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-04-29 20:50:18,899 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2025-04-29 20:50:24,413 - __main__ - INFO - Utility modules imported successfully
+2025-04-29 20:50:24,443 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-29 20:50:24,602 - __main__ - INFO - Attempting to load model...
+2025-04-29 20:50:24,907 - __main__ - INFO - Checkpoint loaded successfully
+2025-04-29 20:50:24,908 - __main__ - INFO - Config loaded: {'data_root': 'filtered_basic_arithmetic', 'embed_dim': 256, 'hidden_dim': 512, 'num_layers': 1, 'dropout': 0.3, 'max_seq_len': 150, 'batch_size': 128, 'num_epochs': 2, 'learning_rate': 0.001, 'teacher_forcing_ratio': 0.9, 'teacher_forcing_decay': 0.9, 'grad_clip': 5.0, 'special_tokens': {'PAD': '<PAD>', 'START': '<START>', 'END': '<END>', 'UNK': '<UNK>'}, 'img_height': 128, 'img_width': 512, 'checkpoint_dir': 'models', 'log_dir': 'models/logs', 'device': 'cpu'}
+2025-04-29 20:50:24,909 - __main__ - INFO - Initializing model...
+2025-04-29 20:50:25,396 - __main__ - INFO - Model and tokenizer loaded successfully
+2025-04-29 20:50:33,954 - python_multipart.multipart - DEBUG - Calling on_part_begin with no data
+2025-04-29 20:50:33,955 - python_multipart.multipart - DEBUG - Calling on_header_field with data[42:61]
+2025-04-29 20:50:33,956 - python_multipart.multipart - DEBUG - Calling on_header_value with data[63:113]
+2025-04-29 20:50:33,957 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:50:33,958 - python_multipart.multipart - DEBUG - Calling on_header_field with data[115:127]
+2025-04-29 20:50:33,958 - python_multipart.multipart - DEBUG - Calling on_header_value with data[129:138]
+2025-04-29 20:50:33,959 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 20:50:33,959 - python_multipart.multipart - DEBUG - Calling on_headers_finished with no data
+2025-04-29 20:50:33,960 - python_multipart.multipart - DEBUG - Calling on_part_data with data[142:1386]
+2025-04-29 20:50:33,961 - python_multipart.multipart - DEBUG - Calling on_part_end with no data
+2025-04-29 20:50:33,961 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-04-29 20:50:33,962 - __main__ - INFO - Received prediction request for file: expr_000915.png
+2025-04-29 20:50:33,963 - __main__ - INFO - Reading file contents
+2025-04-29 20:50:33,967 - __main__ - INFO - Raw file saved to debug_raw_0920db76-9fe0-4e70-9508-91c9d99b2b71.png
+2025-04-29 20:50:33,968 - __main__ - INFO - Converting to PIL Image
+2025-04-29 20:50:33,969 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2025-04-29 20:50:33,970 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 41 1187
+2025-04-29 20:50:33,973 - __main__ - INFO - Image loaded successfully: size=(256, 256), mode=L
+2025-04-29 20:50:33,981 - __main__ - INFO - Processed image saved to debug_processed_00a49de6-1fed-4ece-9ecb-74df5c114a17.png
+2025-04-29 20:50:33,983 - __main__ - INFO - Calling predict_image function
+2025-04-29 20:50:33,985 - __main__ - ERROR - Prediction function error: 'Image' object has no attribute 'read'
+2025-04-29 20:50:33,990 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\prediction.py", line 227, in predict
+    latex = predict_image(model, tokenizer, image, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\utils\utils_test.py", line 199, in predict_image
+    ])
+       
+  File "C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\PIL\Image.py", line 3286, in open
+    prefix = fp.read(16)
+             ^^^^^^^
+AttributeError: 'Image' object has no attribute 'read'
+
+2025-04-29 22:21:49,088 - python_multipart.multipart - DEBUG - Calling on_part_begin with no data
+2025-04-29 22:21:49,090 - python_multipart.multipart - DEBUG - Calling on_header_field with data[42:61]
+2025-04-29 22:21:49,091 - python_multipart.multipart - DEBUG - Calling on_header_value with data[63:113]
+2025-04-29 22:21:49,093 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 22:21:49,093 - python_multipart.multipart - DEBUG - Calling on_header_field with data[115:127]
+2025-04-29 22:21:49,095 - python_multipart.multipart - DEBUG - Calling on_header_value with data[129:138]
+2025-04-29 22:21:49,097 - python_multipart.multipart - DEBUG - Calling on_header_end with no data
+2025-04-29 22:21:49,100 - python_multipart.multipart - DEBUG - Calling on_headers_finished with no data
+2025-04-29 22:21:49,103 - python_multipart.multipart - DEBUG - Calling on_part_data with data[142:1438]
+2025-04-29 22:21:49,108 - python_multipart.multipart - DEBUG - Calling on_part_end with no data
+2025-04-29 22:21:49,112 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-04-29 22:21:49,114 - __main__ - INFO - Received prediction request for file: expr_000913.png
+2025-04-29 22:21:49,116 - __main__ - INFO - Reading file contents
+2025-04-29 22:21:49,127 - __main__ - INFO - Raw file saved to debug_raw_40ded553-657d-49f5-8421-5465297ce4eb.png
+2025-04-29 22:21:49,130 - __main__ - INFO - Converting to PIL Image
+2025-04-29 22:21:49,133 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2025-04-29 22:21:49,135 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 41 1239
+2025-04-29 22:21:49,139 - __main__ - INFO - Image loaded successfully: size=(256, 256), mode=L
+2025-04-29 22:21:49,164 - __main__ - INFO - Processed image saved to debug_processed_8c6afa89-8e29-4624-9b62-f354ee064246.png
+2025-04-29 22:21:49,173 - __main__ - INFO - Calling predict_image function
+2025-04-29 22:21:49,189 - __main__ - ERROR - Prediction function error: 'Image' object has no attribute 'read'
+2025-04-29 22:21:49,234 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\prediction.py", line 227, in predict
+  File "C:\Users\Yeshwanth Kesav\Desktop\AI_Dev_Project\utils\utils_test.py", line 199, in predict_image
+    ])
+       
+  File "C:\Users\Yeshwanth Kesav\anaconda3\Lib\site-packages\PIL\Image.py", line 3286, in open
+    prefix = fp.read(16)
+             ^^^^^^^
+AttributeError: 'Image' object has no attribute 'read'
+
