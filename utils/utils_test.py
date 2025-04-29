@@ -20,30 +20,40 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import models, transforms
 from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 from PIL import Image
-from util_classes import *
-from util_model_classes import *
+from utils.util_classes import *
+from utils.util_model_classes import *
 
 def clean_latex(latex_string):
     """Clean LaTeX expressions by removing unwanted duplicate symbols"""
     # List of symbols that shouldn't be repeated
     no_repeat_symbols = [
-        '+', '=', '^', '-', '*', '/', '\\times', '\\div', '_', '.',
-        '>', '<', '!', '\\rightarrow', '\\leftarrow', '\\Rightarrow', '\\Leftarrow',
-        '\\leq', '\\geq', '\\approx', '\\sim', '\\cong', '\\neq',
-        '(', ')', '[', ']', '{', '}', '|', '\\|', '\\langle', '\\rangle'
+        '+', '=', '^', '-', '*', '/', '_', '.',
+        '>', '<', '!', '(', ')', '[', ']', '{', '}', '|'
     ]
     
-    # Create regex pattern for these symbols
-    pattern = '|'.join([f'({re.escape(sym)}\\s*{re.escape(sym)})' for sym in no_repeat_symbols])
+    # LaTeX commands that shouldn't be repeated
+    no_repeat_latex_commands = [
+        '\\times', '\\div', '\\rightarrow', '\\leftarrow', '\\Rightarrow', '\\Leftarrow',
+        '\\leq', '\\geq', '\\approx', '\\sim', '\\cong', '\\neq', '\\|', '\\langle', '\\rangle'
+    ]
     
-    # Replace duplicates with single occurrences
-    cleaned = re.sub(pattern, lambda m: m.group(0)[0], latex_string)
+    # First remove all whitespace
+    cleaned = re.sub(r'\s+', '', latex_string)
     
-    # Additional cleaning for spacing issues
-    cleaned = re.sub(r'\s+', '', cleaned)  # Normalize spaces
-    cleaned = cleaned.strip()
+    # Process one character symbols
+    for sym in no_repeat_symbols:
+        # Replace repeated symbols with a single instance
+        # This simpler approach avoids regex escaping issues
+        while sym + sym in cleaned:
+            cleaned = cleaned.replace(sym + sym, sym)
     
-    return cleaned
+    # Process LaTeX commands
+    for cmd in no_repeat_latex_commands:
+        # Replace repeated commands with a single instance
+        while cmd + cmd in cleaned:
+            cleaned = cleaned.replace(cmd + cmd, cmd)
+    
+    return cleaned.strip()
 
 
 

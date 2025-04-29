@@ -16,14 +16,20 @@ from pydantic import BaseModel
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, Subset
 from torchvision import models, transforms
 from PIL import Image
 import tempfile
 from torch.optim.lr_scheduler import ReduceLROnPlateau
-from util_classes import *
-from util_model_classes import *
-from utils_test import *
+from utils.util_classes import *
+from utils.util_model_classes import *
+from utils.utils_test import *
+from utils.utils_mlflow import *
+import mlflow
+import mlflow.pytorch
+from mlflow.tracking import MlflowClient
+# import wandb
+# wandb.login(key="f659082c2b19bf3ffaaceceb36c1e280541f6b11")
 
 def train_epoch(model, dataloader, criterion, optimizer, config, epoch, tokenizer):
     model.train()
@@ -72,7 +78,7 @@ def train_epoch(model, dataloader, criterion, optimizer, config, epoch, tokenize
     return train_metrics
 
 
-def train_model(config):
+def train_model(model, tokenizer, config):
     """Main training function with metrics storage for plotting"""
     print(f"Using device: {config.device}")
     
@@ -103,22 +109,6 @@ def train_model(config):
     # Load dataset
     print("Loading dataset...")
     
-    # First, get all LaTeX expressions to build vocabulary
-    all_latex = []
-    for split in ['train', 'val']:
-        split_dir = os.path.join(config.data_root, split)
-        label_files = glob.glob(os.path.join(split_dir, 'labels', '*.txt'))
-        
-        for label_file in tqdm(label_files, desc=f"Reading {split} labels"):
-            with open(label_file, 'r', encoding='utf-8') as f:
-                all_latex.append(f.read().strip())
-    
-    # Create tokenizer and build vocabulary
-    print("Building vocabulary...")
-    tokenizer = LaTeXTokenizer(config)
-    tokenizer.build_vocab(all_latex)
-    print(f"Vocabulary size: {tokenizer.vocab_size}")
-    
     # Create datasets
     train_dataset = CROHMEDataset(config.data_root, tokenizer, config, split='train')
     val_dataset = CROHMEDataset(config.data_root, tokenizer, config, split='val')
@@ -128,27 +118,29 @@ def train_model(config):
     
     print(f"Train dataset size: {len(train_dataset)}")
     print(f"Validation dataset size: {len(val_dataset)}")
-    
+    # Limit dataset size
+    train_subset = Subset(train_dataset, list(range(min(50, len(train_dataset)))))
+    val_subset = Subset(val_dataset, list(range(min(50, len(val_dataset)))))
     # Create data loaders
     train_loader = DataLoader(
-        train_dataset, 
+        train_subset, 
         batch_size=config.batch_size, 
         shuffle=True, 
         pin_memory=True,
-        num_workers=2
+        num_workers=0
     )
     
     val_loader = DataLoader(
-        val_dataset, 
+        val_subset, 
         batch_size=config.batch_size, 
         shuffle=False, 
         pin_memory=True,
-        num_workers=2
+        num_workers=0
     )
     
     # Create model
-    print("Creating model...")
-    model = HandwrittenMathRecognizer(config, tokenizer.vocab_size).to(config.device)
+    # print("Creating model...")
+    # model = HandwrittenMathRecognizer(config, tokenizer.vocab_size).to(config.device)
     
     # Define loss function and optimizer
     criterion = nn.CrossEntropyLoss(ignore_index=tokenizer.token2idx[config.special_tokens['PAD']])
@@ -235,9 +227,12 @@ def train_model(config):
             mlflow.pytorch.log_model(model, "best_model")
             # Log the tokenizer and config as artifacts
             with tempfile.NamedTemporaryFile(suffix='.pkl', delete=False) as f:
-                torch.save({'tokenizer': tokenizer, 'config': config}, f.name)
-                mlflow.log_artifact(f.name, "tokenizer_config")
-                os.unlink(f.name)
+                temp_name = f.name
+
+            torch.save({'tokenizer': tokenizer, 'config': config}, temp_name)
+            mlflow.log_artifact(temp_name, "tokenizer_config")
+            os.unlink(temp_name)
+
         # Make sure to save to Kaggle's output directory
         os.makedirs(config.checkpoint_dir, exist_ok=True)  # This is a persistent location
         # Always save latest model
@@ -253,7 +248,6 @@ def train_model(config):
             'tokenizer': tokenizer,
             'config': config
         }, checkpoint_path)
-        os.sync()
     print("Training complete!")
     
     # Plot and save metrics graphs

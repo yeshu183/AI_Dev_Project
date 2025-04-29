@@ -2,3 +2,4 @@ datasets
 filtered_basic_arithmetic
 models/
 data_processing
+mlruns

@@ -21,9 +21,9 @@ from torchvision import models, transforms
 from PIL import Image
 import tempfile
 from torch.optim.lr_scheduler import ReduceLROnPlateau
-from util_classes import *
-from util_model_classes import *
-from utils_test import *
+from utils.util_classes import *
+from utils.util_model_classes import *
+from utils.utils_test import *
 import mlflow
 import mlflow.pytorch
 from mlflow.tracking import MlflowClient

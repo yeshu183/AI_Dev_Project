@@ -15,12 +15,15 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 from torchvision import models, transforms
 from PIL import Image
+from utils.util_model_classes import *
+from utils.util_classes import *
 
 
 # Load the full checkpoint
-checkpoint = torch.load("best_model.pth", map_location='cpu', weights_only=False)
+checkpoint = torch.load("models/best_model.pth", map_location='cpu', weights_only=False)
 print("Model loaded successfully")
 
+train_model(checkpoint)
 # Print the checkpoint keys to see what's available
 print(f"Checkpoint contains keys: {list(checkpoint.keys())}")
 
