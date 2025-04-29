@@ -19,9 +19,9 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 from torchvision import models, transforms
 from PIL import Image
-from util_classes import *
-from util_model_classes import *
-from utils_test import *
+from utils.util_classes import *
+from utils.util_model_classes import *
+from utils.utils_test import *
 import io
 
 #image_path = "datasets/filtered_basic_arithmetic/test/images/expr_000877.png"
@@ -30,6 +30,8 @@ import io
 
 # Initialize the app
 app = FastAPI(title="LaTeX Recognition API")
+# with open("deployment_success.txt", "w") as f:
+#     f.write("API deployment started successfully.")
 
 # Request model for raw image data
 class ImageData(BaseModel):
@@ -101,6 +103,8 @@ async def predict_from_file(file: UploadFile = File(...)):
         # Get prediction
         latex = predict_image(model, tokenizer, image, config)
         return {"latex": latex}
+    
+
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")

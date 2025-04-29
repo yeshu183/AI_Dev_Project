@@ -19,3 +19,5 @@ stages:
       - util_model_classes.py
       - utils_test.py
       - index.html
+    outs:
+      - deployment_success.txt
