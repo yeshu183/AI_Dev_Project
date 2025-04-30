@@ -1,0 +1,29 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/src:/usr/share/nginx/html
+    networks:
+      - app-network
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - feedback_volume:/app/feedback_data
+      - ./feedback_data:/app/feedback_data  # Mount local folder for direct access
+    networks:
+      - app-network
+
+
+volumes:
+  feedback_volume:
+
+networks:
+  app-network:
+    driver: bridge

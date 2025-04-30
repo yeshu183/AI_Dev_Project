@@ -4,3 +4,4 @@ matplotlib
 sympy
 mlflow
 wandb
+sqlalchemy

@@ -3,3 +3,4 @@ filtered_basic_arithmetic
 models/
 data_processing
 mlruns
+backend/best_model.pth
