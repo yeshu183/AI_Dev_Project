@@ -1,3 +1,4 @@
+prometheus_fastapi_instrumentator
 fastapi==0.95.0
 uvicorn==0.21.1
 python-multipart==0.0.6

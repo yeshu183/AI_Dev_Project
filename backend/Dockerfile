@@ -2,8 +2,9 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt . 
+RUN pip install -r requirements.txt
+RUN pip install prometheus_client
 
 COPY . .
 
@@ -12,7 +13,7 @@ COPY . .
 RUN mkdir -p /app/feedback_data/images
 RUN mkdir -p /app/feedback_data/labels
 RUN mkdir -p /app/models
-COPY best_model.pth /app/models
+COPY models/best_model.pth /app/models
 
 # Create an empty __init__.py file in the root directory to make it a package
 RUN touch __init__.py

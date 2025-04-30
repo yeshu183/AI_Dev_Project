@@ -1,0 +1,88 @@
+schema: '2.0'
+stages:
+  feedback_check:
+    cmd: python check_feedback.py --feedback-dir ../feedback_data --threshold 10
+    deps:
+    - path: ../feedback_data
+      hash: md5
+      md5: 5218657d596fe7870941a272c99dad5a.dir
+      size: 226696
+      nfiles: 28
+    - path: check_feedback.py
+      hash: md5
+      md5: 0e3110f9288557553d944d889c3900df
+      size: 1601
+    outs:
+    - path: feedback_status.json
+      hash: md5
+      md5: 1d04859c8184e68539367128480ab9b6
+      size: 1153
+  retraining:
+    cmd: python retrain.py --status-file feedback_status.json --train-data ../feedback_data
+      --save-model-path models/best_model_retrained.pth
+    deps:
+    - path: ../feedback_data
+      hash: md5
+      md5: 5218657d596fe7870941a272c99dad5a.dir
+      size: 226696
+      nfiles: 28
+    - path: feedback_status.json
+      hash: md5
+      md5: 1d04859c8184e68539367128480ab9b6
+      size: 1153
+    - path: retrain.py
+      hash: md5
+      md5: 07765bba2fc1fa4dd3c1e1232d401591
+      size: 4474
+    outs:
+    - path: models/best_model_retrained.pth
+      hash: md5
+      md5: de6bcc4a81a3b6042d582fb384bd4bb8
+      size: 63007890
+  evaluate:
+    cmd: python evaluate.py --status-file feedback_status.json --model-path models/best_model_retrained.pth
+      --test-data ../feedback_data
+    deps:
+    - path: ../feedback_data
+      hash: md5
+      md5: 5218657d596fe7870941a272c99dad5a.dir
+      size: 226696
+      nfiles: 28
+    - path: evaluate.py
+      hash: md5
+      md5: c0ac973dc4901cc2e40cea6455693672
+      size: 4682
+    - path: feedback_status.json
+      hash: md5
+      md5: 1d04859c8184e68539367128480ab9b6
+      size: 1153
+    - path: models/best_model_retrained.pth
+      hash: md5
+      md5: de6bcc4a81a3b6042d582fb384bd4bb8
+      size: 63007890
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: 54eb03bbdb229661039bdc180376c515
+      size: 1211
+  update_model:
+    cmd: python update_model.py --status-file feedback_status.json --metrics-file
+      metrics.json --source-model models/best_model_retrained.pth --target-model ../backend/models/best_model.pth
+    deps:
+    - path: feedback_status.json
+      hash: md5
+      md5: 1d04859c8184e68539367128480ab9b6
+      size: 1153
+    - path: metrics.json
+      hash: md5
+      md5: 54eb03bbdb229661039bdc180376c515
+      size: 1211
+    - path: models/best_model_retrained.pth
+      hash: md5
+      md5: de6bcc4a81a3b6042d582fb384bd4bb8
+      size: 63007890
+    outs:
+    - path: ../backend/models/best_model.pth
+      hash: md5
+      md5: de6bcc4a81a3b6042d582fb384bd4bb8
+      size: 63007890

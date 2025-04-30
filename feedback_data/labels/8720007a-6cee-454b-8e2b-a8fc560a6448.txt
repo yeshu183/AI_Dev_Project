@@ -1,0 +1,1 @@
+\log_2\frac12+\log_4\frac24

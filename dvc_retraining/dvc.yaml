@@ -1,0 +1,43 @@
+stages:
+  # Check feedback data and trigger retraining if necessary
+  feedback_check:
+    cmd: python check_feedback.py --feedback-dir ../feedback_data --threshold 5
+    deps:
+      - ../feedback_data
+      - check_feedback.py
+    outs:
+      - feedback_status.json
+    
+  # Retraining stage (only runs if feedback exceeds threshold)
+  retraining:
+    cmd: python retrain.py --status-file feedback_status.json --train-data ../feedback_data --save-model-path models/best_model_retrained.pth
+    deps:
+      - feedback_status.json
+      - ../feedback_data
+      - retrain.py
+    outs:
+      - models/best_model_retrained.pth:
+          cache: false
+    
+  # Evaluation stage (only runs if retraining was performed)
+  evaluate:
+    cmd: python evaluate.py --status-file feedback_status.json --model-path models/best_model_retrained.pth --test-data ../feedback_data
+    deps:
+      - feedback_status.json
+      - models/best_model_retrained.pth
+      - evaluate.py
+      - ../feedback_data
+    metrics:
+      - metrics.json:
+          cache: false
+    
+  # Update production model if evaluation metrics are good
+  update_model:
+    cmd: python update_model.py --status-file feedback_status.json --metrics-file metrics.json --source-model models/best_model_retrained.pth --target-model ../backend/models/best_model.pth
+    deps:
+      - feedback_status.json
+      - metrics.json
+      - models/best_model_retrained.pth
+    outs:
+      - ../backend/models/best_model.pth:
+          cache: false

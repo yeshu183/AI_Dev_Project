@@ -1,0 +1,52 @@
+{
+  "retrained": true,
+  "loss": 2.4765377044677734,
+  "exact_match": 0.5,
+  "token_accuracy": 0.5797101449275363,
+  "bleu": 0.0,
+  "timestamp": "2025-04-30",
+  "training_history": {
+    "train_loss": [
+      0.429848313331604,
+      0.4036230146884918
+    ],
+    "train_exact_match": [
+      0.4,
+      0.5
+    ],
+    "train_token_accuracy": [
+      0.572463768115942,
+      0.5144927536231884
+    ],
+    "train_bleu": [
+      0.0,
+      0.0
+    ],
+    "epoch": [
+      1,
+      2
+    ]
+  },
+  "samples": [
+    {
+      "prediction": "$$y=Ax+A^2$$",
+      "ground_truth": "$$y=Ax+A^2$$"
+    },
+    {
+      "prediction": "\\sin\\sin{-x-\\sin\\sin\\sin\\sin(-",
+      "ground_truth": "\\sin\\sin{x}-\\sin\\sin{y}-\\sin\\sin(x-y)"
+    },
+    {
+      "prediction": "\\frac\\frac+\\frac\\frac\\frac{4}{}\\frac\\frac{}{}{}{}{$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",
+      "ground_truth": "\\log\\log_2\\frac\\frac12+\\log\\log_4\\frac\\frac24"
+    },
+    {
+      "prediction": "4277",
+      "ground_truth": "4277"
+    },
+    {
+      "prediction": "a+b+c+d+e",
+      "ground_truth": "a+b+c+d+e"
+    }
+  ]
+}
