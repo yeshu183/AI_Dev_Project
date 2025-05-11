@@ -55,12 +55,13 @@ Prometheus is used for monitoring and alerting:
 
 The feedback mount system implements a closed-loop ML architecture:
 
-1. **Feedback Collection**: User feedback is collected through the UI and stored
-2. **Data Aggregation**: Feedback is combined with original predictions
-3. **Quality Assessment**: Feedback data is validated and preprocessed
-4. **Model Retraining Trigger**: When sufficient feedback is collected, retraining is automatically triggered
-5. **Performance Evaluation**: New model is evaluated against previous versions
-6. **Model Promotion**: If the new model outperforms the current one, it's promoted to production
+1. **Feedback Collection**: User feedback is collected through the UI and stored in a Docker folder, which is mounted to local storage.
+2. **Rendered Latex**: Included a rendered LaTeX part in ui for easier readability and feedback
+3. **Data Aggregation**: Feedback is combined with original predictions
+4. **Quality Assessment**: Feedback data is validated and preprocessed
+5. **Model Retraining Trigger**: When sufficient feedback is collected, retraining is automatically triggered
+6. **Performance Evaluation**: New model is evaluated against previous versions
+7. **Model Promotion**: If the new model outperforms the current one, it's promoted to production
 
 This system ensures the model continually improves based on real-world usage patterns.
 
