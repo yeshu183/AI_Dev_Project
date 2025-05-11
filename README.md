@@ -112,13 +112,13 @@ The Kaggle notebook demonstrates the end-to-end training process and can be used
 
 ### High-Level Design (HLD)
 
-*[![HLD](HLD-1.jpg)]*
+*[![HLD](HLD.jpg)]*
 
 The HLD illustrates the overall system architecture, showing the interaction between different components and the data flow through the system.
 
 ### Low-Level Design (LLD)
 
-*[![LLD](LLD-1.jpg)]*
+*[![LLD](LLD.jpg)]*
 
 The LLD provides detailed information about each component, including:
 - Internal structures
