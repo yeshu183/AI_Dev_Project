@@ -81,6 +81,8 @@ This Directed Acyclic Graph (DAG) ensures:
 
 The model is trained on CROHME Dataset from the competition, which contains the inkml files of more than 10000 handwritten expressions.
 
+WandB link for metrics monitoring : https://api.wandb.ai/links/yeshu183-indian-institute-of-technology-madras/qy3u5j7h
+
 - Dataset Conversion : The INKML files were converted to image and label files and stored in the respective folder.
 
 The training process includes:
