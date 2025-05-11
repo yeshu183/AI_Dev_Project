@@ -79,16 +79,18 @@ This Directed Acyclic Graph (DAG) ensures:
 
 ## Kaggle Dataset and Training
 
-The model is trained on [Dataset Name] from Kaggle, which contains [brief description of the dataset].
+The model is trained on CROHME Dataset from the competition, which contains the inkml files of more than 10000 handwritten expressions.
+
+- Dataset Conversion : The INKML files were converted to image and label files and stored in the respective folder.
 
 The training process includes:
-- Exploratory data analysis
-- Data preprocessing and feature engineering
-- Model selection and hyperparameter tuning
-- Cross-validation
-- Performance evaluation
+- Exploratory data analysis : Visualizing Random Images.
+- Data preprocessing and feature engineering : Image resizing, rotating, cropping etc for robustness.
+- Model selection and hyperparameter tuning : Used a PyTorch Encoder Decoder model with attention mechanism where encoder is a freezed ResNet-18 network and decoder is a simple LSTM architecture.
+- Training : The model was trained for 100 epochs in Kaggle environment utilizing the GPU resources.
+- Performance evaluation : BLEU Score, Exact Match Accuracy, Loss and Token Accuracy were the metrics used.
 
-The Kaggle notebook demonstrates the end-to-end training process and can be used as a reference for understanding the model architecture and training methodology.
+The Kaggle notebook ```CROHME_Data_Exploration.ipynb```demonstrates the end-to-end training process and can be used as a reference for understanding the model architecture and training methodology.
 
 ## Architecture Diagrams
 
