@@ -68,26 +68,7 @@ This system ensures the model continually improves based on real-world usage pat
 
 The project uses DVC (Data Version Control) to manage the model retraining pipeline:
 
-```
-    +---------------+
-    | data_prep.dvc |
-    +-------+-------+
-            |
-            v
-    +---------------+
-    | features.dvc  |
-    +-------+-------+
-            |
-            v
-    +---------------+
-    |  train.dvc    |
-    +-------+-------+
-            |
-            v
-    +---------------+
-    | evaluate.dvc  |
-    +---------------+
-```
+*[![DVC_DAG](DVCDAG.png)]*
 
 This Directed Acyclic Graph (DAG) ensures:
 - Reproducible model retraining
