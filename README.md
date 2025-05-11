@@ -5,6 +5,8 @@
 
 This repository contains a comprehensive MLOps pipeline for an AI development project, implementing best practices for continuous integration, deployment, monitoring, and model retraining.
 
+Github Link : https://github.com/yeshu183/AI_Dev_Project/
+
 ## Project Pipeline
 
 The MLOps pipeline implements the following workflow:
