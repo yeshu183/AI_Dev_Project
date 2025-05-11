@@ -1,7 +1,7 @@
 # AI_Dev_Project
-##DA5402 final project
-###DA24M009
-###DA24M026
+## DA5402 final project
+### DA24M009
+### DA24M026
 
 This repository contains a comprehensive MLOps pipeline for an AI development project, implementing best practices for continuous integration, deployment, monitoring, and model retraining.
 
