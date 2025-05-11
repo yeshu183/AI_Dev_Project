@@ -1,0 +1,15 @@
+strict digraph {
+"datasets.dvc";
+"filtered_basic_arithmetic.dvc";
+"dvc_retraining/dvc.yaml:feedback_check";
+"dvc_retraining/dvc.yaml:retraining";
+"dvc_retraining/dvc.yaml:evaluate";
+"dvc_retraining/dvc.yaml:update_model";
+"dvc_retraining/dvc.yaml:feedback_check" -> "dvc_retraining/dvc.yaml:retraining";
+"dvc_retraining/dvc.yaml:feedback_check" -> "dvc_retraining/dvc.yaml:evaluate";
+"dvc_retraining/dvc.yaml:feedback_check" -> "dvc_retraining/dvc.yaml:update_model";
+"dvc_retraining/dvc.yaml:retraining" -> "dvc_retraining/dvc.yaml:evaluate";
+"dvc_retraining/dvc.yaml:retraining" -> "dvc_retraining/dvc.yaml:update_model";
+"dvc_retraining/dvc.yaml:evaluate" -> "dvc_retraining/dvc.yaml:update_model";
+}
+
